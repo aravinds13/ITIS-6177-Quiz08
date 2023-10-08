@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const app = express();
 const port = 3000;
 
@@ -399,6 +400,15 @@ app.delete('/student', bodyParser.json(),(req,res) => {
         }).catch(err => {
             console.log(err);
         });
+});
+
+app.get('/say', (req,res) => {
+  const keyword = req.query?.keyword;
+  console.log(keyword);
+  axios.get(`https://piy8au10fi.execute-api.us-east-2.amazonaws.com/test/say?keyword=${keyword}`)
+    .then((response)=>{
+      res.send(response.data);
+    })
 });
 
 app.listen(port, () => {
